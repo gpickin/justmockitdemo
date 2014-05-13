@@ -7,16 +7,14 @@ component displayname="Status Service" hint="I look after the Statuses Business 
 	
 	
 	public query function getStatuses( numeric userid=-1){
-		var statusDAO = new services.statusDAO();
 		
-		return statusDAO.getStatuses( userid = arguments.userid );
+		return application.statusDAO.getStatuses( userid = arguments.userid );
 			
 	}
 	
 	
 	public struct function insert( userid, formstruct ) {
 		var result = {};
-		var statusDAO = new services.statusDAO();
 		
 		if ( userid == "" or userid == 0 ){
 			result.status = 500;
@@ -28,7 +26,7 @@ component displayname="Status Service" hint="I look after the Statuses Business 
 		} 
 		else {
 			
-			statusDAO.insertStatus( arguments.userid , arguments.formstruct );
+			application.statusDAO.insertStatus( arguments.userid , arguments.formstruct );
 			result.status = 200;
 			result.message = "Thanks for sharing - Geromino"; 
 		}

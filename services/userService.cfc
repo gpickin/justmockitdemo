@@ -16,8 +16,8 @@ component displayname="User Service" hint="I look after the User Business Logic"
 			return 0;
 		}
 		else {
-			var userDAO = new services.userDAO();
-			var user = userDAO.getUserByLogin( arguments.email, arguments.password );
+			
+			var user = application.userDAO.getUserByLogin( arguments.email, arguments.password );
 			if ( user.recordcount eq 0) {
 				// no user found with email and password
 				return 0;
@@ -36,9 +36,9 @@ component displayname="User Service" hint="I look after the User Business Logic"
 		
 	public struct function registerUser( formstruct ) {
 		var result = {};
-		var userDAO = new services.userDAO();
+		
 			
-		user = userDAO.getUser( email=arguments.formstruct.email, detail="short" );
+		user = application.userDAO.getUser( email=arguments.formstruct.email, detail="short" );
 		if ( user.recordcount == 1) {
 			result.status = 500;
 			result.message = "Email address is already taken, please try again.";
@@ -46,7 +46,7 @@ component displayname="User Service" hint="I look after the User Business Logic"
 		else {
 			
 			try {
-				userid = userDAO.insertUser( arguments.formstruct );
+				userid = application.userDAO.insertUser( arguments.formstruct );
 				result.status = 200;
 				result.message = "Thank you for signing up. Welcome to Who's Who";
 				result.id = userid;	
@@ -65,17 +65,15 @@ component displayname="User Service" hint="I look after the User Business Logic"
 	}
 	
 	public query function getUser( numeric userid ) {
-		var userDAO = new services.userDAO();
 			
-		user = userDAO.getUser( userid = arguments.userid, detail="full" );
+		user = application.userDAO.getUser( userid = arguments.userid );
 		
 		return user;
 	}
 	
 	public query function getUsersWithStatus() {
-		var userDAO = new services.userDAO();
 
-		user = userDAO.getUsersWithStatus();
+		user = application.userDAO.getUsersWithStatus();
 		
 		return user;
 	}
